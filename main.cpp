@@ -8,6 +8,7 @@ using namespace std;
 
 int main()
 {
+    int lengthRunning = 20;
     int lengthChar = 100;
     char text[lengthChar];
     int lengthText;
@@ -33,7 +34,7 @@ kembali:
     }
 
     int index[lengthChar];
-    for (int i = 0; i < lengthChar; i++)
+    for (int i = 0; i < lengthText; i++)
     {
         if (text[i] >= 'A' && text[i] <= 'Z')
         {
@@ -46,6 +47,30 @@ kembali:
         else
         {
             index[i] = 0;
+        }
+    }
+
+    for (int i = lengthText; i < lengthChar; i++)
+    {
+        index[i] = 0;
+    }
+
+    char temp[lengthRunning][7][11];
+    for (int i = 0; i < lengthRunning; i++)
+    {
+        for (int j = 0; j < 7; j++)
+        {
+            for (int k = 0; k < 11; k++)
+            {
+                if (i == 0 && k == 0 || i == lengthRunning - 1 && k == 9)
+                {
+                    temp[i][j][k] = '|';
+                }
+                else
+                {
+                    temp[i][j][k] = ' ';
+                }
+            }
         }
     }
 
@@ -75,7 +100,7 @@ kembali2:
 
             for (int j = 0; j < 7; j++)
             {
-                for (int i = 0; i < 20; i++)
+                for (int i = 0; i < lengthRunning; i++)
                 {
                     for (int k = 0; k < 10; k++)
                     {
@@ -87,7 +112,7 @@ kembali2:
 
             if (arah == 'L' || arah == 'l')
             {
-                for (int i = 0; i < 20; i++)
+                for (int i = 0; i < lengthRunning; i++)
                 {
                     for (int j = 0; j < 7; j++)
                     {
@@ -109,7 +134,7 @@ kembali2:
                 }
                 for (int i = 0; i < 7; i++)
                 {
-                    temp[19][i][8] = textArray[0][i][0];
+                    temp[lengthRunning - 1][i][8] = textArray[0][i][0];
                 }
 
                 for (int i = 0; i < lengthChar; i++)
@@ -135,25 +160,58 @@ kembali2:
                 }
             }
 
-            // else if (arah == 'R' || arah == 'r')
-            // {
-            //     for (int i = lengthChar - 2; i > 1; i--)
-            //     {
-            //         temp[i] = temp[i - 1];
-            //     }
+            else if (arah == 'R' || arah == 'r')
+            {
+                for (int i = lengthRunning - 1; i >= 0; i--)
+                {
+                    for (int j = 6; j >= 0; j--)
+                    {
+                        for (int k = 9; k >= 0; k--)
+                        {
+                            if (!(i == 0 && k == 0 || i == 19 && k == 9))
+                            {
+                                if (k == 0)
+                                {
+                                    temp[i][j][k] = temp[i - 1][j][k + 9];
+                                }
+                                else
+                                {
+                                    temp[i][j][k] = temp[i][j][k - 1];
+                                }
+                            }
+                        }
+                    }
+                }
+                for (int i = 6; i >= 0; i--)
+                {
+                    temp[0][i][1] = textArray[lengthChar - 1][i][9];
+                }
 
-            //     temp[1] = text[lengthChar - 1];
-
-            //     for (int i = lengthChar - 1; i > 0; i--)
-            //     {
-            //         text[i] = text[i - 1];
-            //     }
-            //     text[0] = temp[lengthChar - 2];
-            // }
+                for (int i = lengthChar - 1; i >= 0; i--)
+                {
+                    for (int j = 6; j >= 0; j--)
+                    {
+                        for (int k = 9; k >= 0; k--)
+                        {
+                            if (k == 0)
+                            {
+                                textArray[i][j][k] = textArray[i - 1][j][k + 9];
+                            }
+                            else
+                            {
+                                textArray[i][j][k] = textArray[i][j][k - 1];
+                            }
+                        }
+                    }
+                }
+                for (int i = 6; i >= 0; i--)
+                {
+                    textArray[0][i][0] = temp[lengthRunning - 1][i][8];
+                }
+            }
 
             cout << setfill('-') << setw(200) << "-" << endl;
-
-            Sleep(1);
+            Sleep(0);
         }
     }
     else
