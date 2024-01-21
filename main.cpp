@@ -38,7 +38,7 @@ escape2:
             ins::border();
             ins::animateFont();
 
-            if (direction, "L")
+            if (direction == "L")
             {
                 ins::toLeft(temp, showFont);
             }

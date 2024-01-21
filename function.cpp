@@ -172,7 +172,7 @@ void ins::toRight(char temp[maxRunning][row][col], char showFont[maxText][row][c
         {
             for (int k = col - 2; k >= 0; k--)
             {
-                if (!(i == 0 && k == 0 || i == 0 && k == col - 2))
+                if (!(i == 0 && k == 0 || i == maxRunning - 1 && k == col - 2))
                 {
                     if (k == 0)
                     {
